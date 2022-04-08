@@ -21,7 +21,7 @@ class EmpleadoFactory extends Factory
             'last_name' => $this->faker->lastName,
             'email' => $this->faker->companyEmail,
             'phone' => $this->faker->phoneNumber,
-            'company_id' => $this->faker->rand(1, 50),
+            'company_id' => $this->faker->numberBetween(1, 10),
         ];
     }
 }

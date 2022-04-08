@@ -20,7 +20,7 @@ class EmpresaFactory extends Factory
             'name' => $this->faker->company,
             'email' => $this->faker->companyEmail,
             'website' => $this->faker->domainName,
-            'logo' => $this->faker->imageUrl(100, 100),
+            'logo' => $this->faker->image('storage\app\public', 100, 100, false)
         ];
     }
 }
