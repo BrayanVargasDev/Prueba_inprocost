@@ -36,9 +36,9 @@ class EmpresaController extends Controller
      * @param  \App\Models\Empresa  $empresa
      * @return \Illuminate\Http\Response
      */
-    public function show(Empresa $empresa)
+    public function show(Empresa $id)
     {
-        return new EmpresaResource($empresa);
+        return new EmpresaResource($id);
     }
 
     /**
@@ -48,9 +48,22 @@ class EmpresaController extends Controller
      * @param  \App\Models\Empresa  $empresa
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Empresa $empresa)
+    public function update(Request $request, Empresa $id)
     {
-        //
+        $empresaUpdate = $request->getContent();
+        $empresaUpdate = json_decode($empresaUpdate, true);
+        Empresa::where('id', $id->id)
+            ->update([
+                'name' => $empresaUpdate['name'],
+                'email' => $empresaUpdate['email'],
+                'website' => $empresaUpdate['website'],
+                'logo' => $empresaUpdate['logo'],
+                'updated_at' => now(),
+            ]);
+        
+        return response()->json([
+            'message' => 'Success',
+            'empresa' => new EmpresaResource($id)], 200);
     }
 
     /**
@@ -59,9 +72,9 @@ class EmpresaController extends Controller
      * @param  \App\Models\Empresa  $empresa
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Empresa $empresa)
+    public function destroy(Empresa $id)
     {
-        $empresa->delete();
+        $id->delete();
         return response()->json(['message' => 'Successfully deleted'], 204);
     }
 }

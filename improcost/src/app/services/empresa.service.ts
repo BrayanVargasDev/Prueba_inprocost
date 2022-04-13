@@ -14,43 +14,23 @@ export class EmpresaService {
     private http: HttpClient
   ) { }
 
-  getAll(token: string) {
-    const headers = new HttpHeaders({
-      // 'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    });
-    return this.http.get<Empresa[]>(this.apiUrl, { headers });
+  getAll() {
+    return this.http.get<Empresa[]>(this.apiUrl);
   }
   
-  getById(id: number, token: string) {
-    const headers = new HttpHeaders({
-      // 'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    });
-    return this.http.get<Empresa>(`${this.apiUrl}/${id}`, { headers });
+  getById(id: number) {
+    return this.http.get<Empresa>(`${this.apiUrl}/${id}`);
   }
 
-  create(empresa: Empresa, token: string) {
-    const headers = new HttpHeaders({
-      // 'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    });
-    return this.http.post<Empresa>(this.apiUrl, empresa, { headers });
+  create(empresa: Empresa) {
+    return this.http.post<Empresa>(this.apiUrl, empresa);
   }
 
-  update(empresa: Empresa, token: string) {
-    const headers = new HttpHeaders({
-      // 'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    });
-    return this.http.put<Empresa>(`${this.apiUrl}/${empresa.id}`, empresa, { headers });
+  update(empresa: Empresa) {
+    return this.http.put<Empresa>(`${this.apiUrl}/${empresa.id}`, empresa);
   }
 
-  delete(id: number, token: string) {
-    const headers = new HttpHeaders({
-      // 'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    });
-    return this.http.delete<Empresa>(`${this.apiUrl}/${id}`, { headers });
+  delete(id: number) {
+    return this.http.delete<Empresa>(`${this.apiUrl}/${id}`);
   }
 }

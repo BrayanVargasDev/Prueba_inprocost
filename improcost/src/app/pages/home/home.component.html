@@ -1,0 +1,19 @@
+<div class="container mt-5">
+    <div class="d-grid gap-5">
+        <div class="row">
+            <h1>
+                {{ user.name }}
+            </h1>
+            <p class="mt-2">{{ user.email }}</p>
+            <p> {{ user.created_at | date }} </p>
+        </div>
+        <ul class="d-grid gap-5">
+            <li class="row d-inline-block">
+                <a class="btn btn-primary mw-400" routerLink="/empresas">Empresas</a>
+            </li>
+            <li class="row">
+                <a class="btn btn-secondary" routerLink="/empleados">Empleados</a>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -15,7 +15,7 @@ class HistoriaController extends Controller
      */
     public function index()
     {
-        //
+        return HistoriaResource::collection(Historia::paginate(5));
     }
 
     /**
@@ -37,29 +37,6 @@ class HistoriaController extends Controller
      */
     public function show(Historia $historia)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Historia  $historia
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Historia $historia)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Historia  $historia
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Historia $historia)
-    {
-        //
+        return new HistoriaResource($historia);
     }
 }

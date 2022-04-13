@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Models\Empleado;
 use Illuminate\Http\Request;
+use App\Http\Resources\V1\EmpleadoResource;
 
 class EmpleadoController extends Controller
 {
@@ -15,7 +16,7 @@ class EmpleadoController extends Controller
      */
     public function index()
     {
-        //
+        return EmpleadoResource::collection(Empleado::paginate(5));
     }
 
     /**
@@ -35,10 +36,11 @@ class EmpleadoController extends Controller
      * @param  \App\Models\Empleado  $empleado
      * @return \Illuminate\Http\Response
      */
-    public function show(Empleado $empleado)
+    public function show(Empleado $id)
     {
-        //
+        return new EmpleadoResource($id);
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -47,9 +49,22 @@ class EmpleadoController extends Controller
      * @param  \App\Models\Empleado  $empleado
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Empleado $empleado)
-    {
-        //
+    public function update(Request $request, Empleado $id)
+    {   
+        $empleadoUpdate = $request->getContent();
+        $empleadoUpdate = json_decode($empleadoUpdate, true);
+        Empleado::where('id', $id->id)
+            ->update(['first_name' => $empleadoUpdate['first_name'],
+                        'last_name' => $empleadoUpdate['last_name'],
+                        'email' => $empleadoUpdate['email'],
+                        'phone' => $empleadoUpdate['phone'],
+                        'company_id' => $empleadoUpdate['company_id'],
+                        'updated_at' => now(),
+                    ]);
+        
+        return response()->json([
+            'message' => 'Success',
+            'empleado' => new EmpleadoResource($id)], 200);
     }
 
     /**
@@ -60,6 +75,12 @@ class EmpleadoController extends Controller
      */
     public function destroy(Empleado $empleado)
     {
-        //
+        $empleado->delete();
+        return response()->json(['message' => 'Empleado eliminado correctamente'], 204);
+    }
+
+    public function empleadosPorEmpresa($idEmpresa)
+    {
+        return EmpleadoResource::collection(Empleado::where('id_empresa', $idEmpresa)->paginate(5));
     }
 }
